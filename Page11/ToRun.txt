@@ -1,5 +1,6 @@
 chmod +x slurm_cluster_submit.sh
-sbatch chmod +x local_cluster_run.sh
+sbatch slurm_cluster_submit.sh
+
+
+chmod +x local_cluster_run.sh
 ./local_cluster_run.sh
-
-

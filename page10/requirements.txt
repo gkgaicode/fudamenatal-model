@@ -1,0 +1,25 @@
+# --- Base Framework Layers ---
+torch==2.4.0
+torchvision==0.19.0
+triton==3.0.0
+numpy==1.26.4
+
+# --- Distributed Sharding & Scale ---
+deepspeed==0.14.4
+
+# --- Modeling Ecosystem & Core Tokenizers ---
+transformers==4.44.0
+tokenizers==0.19.1
+accelerate==0.33.0
+sentencepiece==0.2.0
+
+# --- Quantization Optimization ---
+autoawq==0.2.6
+bitsandbytes==0.43.3
+
+# --- High-Throughput Serving Engine ---
+vllm==0.5.4
+
+# --- Infrastructure Testing & Verification ---
+pytest==8.3.2
+psutil==6.0.0

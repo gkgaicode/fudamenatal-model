@@ -75,14 +75,14 @@ If you want to explore this further, let me know:
 —-
 —-
 
-page 3
 
 
 
-To build a foundational model completely from scratch, you start by defining a Transformer architecture. Below is a complete, minimal implementation of a Decoder-only Transformer (similar to GPT) built using PyTorch, followed by a basic pre-training loop.
-## 1. Define the Transformer Architecture
 
-import torchimport torch.nn as nnimport torch.nn.functional as F
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
 class CausalSelfAttention(nn.Module):
     def __init__(self, d_model, n_heads):
         super().__init__()
@@ -113,6 +113,7 @@ class CausalSelfAttention(nn.Module):
         y = att @ v
         y = y.transpose(1, 2).contiguous().view(B, T, C)
         return self.c_proj(y)
+
 class TransformerBlock(nn.Module):
     def __init__(self, d_model, n_heads):
         super().__init__()
@@ -130,6 +131,7 @@ class TransformerBlock(nn.Module):
         x = x + self.attn(self.ln_1(x))
         x = x + self.mlp(self.ln_2(x))
         return x
+
 class MiniLanguageModel(nn.Module):
     def __init__(self, vocab_size, d_model, n_heads, n_layers, max_seq_len):
         super().__init__()
@@ -161,34 +163,6 @@ class MiniLanguageModel(nn.Module):
         
         return logits
 
-## 2. Execute the Pre-training Loop
-This snippet sets up self-supervised learning, where the model predicts the next token in a sequence. [1] 
-
-# Hyperparameters (Scaled down for demonstration)vocab_size = 50257     # Standard GPT-2 vocabulary sized_model = 256          # Embedding dimensionn_heads = 4            # Multi-head attention headsn_layers = 4           # Transformer layersmax_seq_len = 128      # Context window sizebatch_size = 32learning_rate = 3e-4
-# Initialize model and optimizerdevice = 'cuda' if torch.cuda.is_available() else 'cpu'model = MiniLanguageModel(vocab_size, d_model, n_heads, n_layers, max_seq_len).to(device)optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
-# Dummy dataset generation (Replace with tokenized web crawl data)# Inputs (X) shape: [batch_size, max_seq_len]# Targets (Y) shape: [batch_size, max_seq_len] (shifted by 1 token)X = torch.randint(0, vocab_size, (batch_size, max_seq_len)).to(device)Y = torch.randint(0, vocab_size, (batch_size, max_seq_len)).to(device)
-# Simple training step
-model.train()
-optimizer.zero_grad()
-# Forward passlogits = model(X)
-# Reshape logits and targets for CrossEntropyLoss calculation# Logits: [Batch * Sequence, Vocab], Targets: [Batch * Sequence]loss = F.cross_entropy(logits.view(-1, vocab_size), Y.view(-1))
-# Backward pass and update weights
-loss.backward()
-optimizer.step()
-
-print(f"Training Loss: {loss.item():.4f}")
-
-## Scale Considerations
-To scale this from a toy script to a true foundational model, you would need to:
-
-   1. Replace the dummy dataset with multi-terabyte tokenizers (like Hugging Face tokenizers).
-   2. Wrap the model in PyTorch FSDP (Fully Sharded Data Parallel) or DeepSpeed to split layers across thousands of cluster nodes.
-
-If you are ready to take next steps, let me know:
-
-* Do you want to see how to implement distributed training (FSDP/DeepSpeed) code?
-* Would you like code for tokenizing raw text files before feeding them to this model?
-* Are you looking for code to generate text (inference loop) from this model?
 
 
 

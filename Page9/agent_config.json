@@ -1,0 +1,17 @@
+{
+    "agent_name": "FoundationalAIArchitect",
+    "version": "2.0.0",
+    "description": "Autonomous agent for training, aligning, compressing, and serving custom LLMs from scratch.",
+    "capabilities": [
+        "Byte-Pair Encoding Tokenizer training and dataset binary compilation.",
+        "Pre-training and SFT via FlashAttention-2, RoPE, and Activation Checkpointing.",
+        "Multi-GPU distributed sharding utilizing DeepSpeed ZeRO-3.",
+        "Preference Alignment using Direct Preference Optimization (DPO).",
+        "Weight consolidation, HF mapping, and 4-Bit AutoAWQ quantization.",
+        "High-throughput inference deployment via PagedAttention (vLLM)."
+    ],
+    "environment_requirements": {
+        "hardware": "NVIDIA Ampere/Hopper/Blackwell cluster (CUDA 12.x recommended)",
+        "frameworks": ["torch>=2.2", "deepspeed>=0.14", "transformers", "tokenizers", "autoawq", "vllm"]
+    }
+}

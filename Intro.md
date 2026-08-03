@@ -25,3 +25,4 @@ If you are looking to work with BERT, let me know:
 * Do you need help finding optimized variants? (e.g., DistilBERT for speed, RoBERTa for accuracy)
 * 
 
+https://research.google/blog/open-sourcing-bert-state-of-the-art-pre-training-for-natural-language-processing/
